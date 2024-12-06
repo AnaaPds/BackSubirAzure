@@ -1,9 +1,8 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - daftnes
+name: Build and deploy JAR app to Azure Web App - managerdoctor
 env:
-  SPRING_DATASOURCE_PASSWORD: {{secrets.AIVEN_MYSQL_PASSWORD}}
+  SPRING_DATASOURCE_PASSWORD: ${{ secrets.AIVEN_MYSQL_PASSWORD }}
+  
 on:
   push:
     branches:
@@ -20,7 +19,7 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: 'java21'
+          java-version: '21'
           distribution: 'microsoft'
 
       - name: Build with Maven
@@ -50,15 +49,17 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_93EF2C289CFC4F1DB0BBF759CEB5F56A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4717382FE4BE434C89CF1DB94C50A9E7 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8C000CE5E3EC460181A07A1D9F28532D }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A37C6377C110445AA796829EF5C819FA }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2A1858A71ADE40A0B06D54F4014C4373 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6F20CA3D3891429E98E27E7A65297216 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'daftnes'
+          app-name: 'managerdoctor'
           slot-name: 'Production'
           package: '*.jar'
-          
+        env:
+          SPRING_DATASOURCE_PASSWORD: ${{ env.AIVEN_MYSQL_PASSWORD }}
+          AIVEN_MYSQL_PASSWORD: ${{ env.AIVEN_MYSQL_PASSWORD }}
