@@ -2,7 +2,8 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
 name: Build and deploy JAR app to Azure Web App - daftnes
-
+env:
+  SPRING_DATASOURCE_PASSWORD: {{secrets.AIVEN_MYSQL_PASSWORD}}
 on:
   push:
     branches:
