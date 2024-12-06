@@ -49,15 +49,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A37C6377C110445AA796829EF5C819FA }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2A1858A71ADE40A0B06D54F4014C4373 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6F20CA3D3891429E98E27E7A65297216 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_93EF2C289CFC4F1DB0BBF759CEB5F56A }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4717382FE4BE434C89CF1DB94C50A9E7 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8C000CE5E3EC460181A07A1D9F28532D }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'managerdoctor'
+          app-name: 'daftnes'
           slot-name: 'Production'
           package: '*.jar'
         env:
