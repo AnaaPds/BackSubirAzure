@@ -39,6 +39,7 @@ public class academiaModel {
 		this.idade = dto.idade();
 		this.email = dto.email();
 		this.modalidade = dto.modalidade();
+		this.url = dto.url();
 	}
 
 	public UUID getId() {
