@@ -31,8 +31,20 @@ public class academiaController {
 
     @PostMapping("/post")
     public ResponseEntity<?> createAcademia(@RequestBody academiaDto academia) {
-    	academiaModel aca = new academiaModel(academia);
-        return ResponseEntity.ok(repo.save(aca));
+    	System.out.println("Dados recebidos pelo servidor: ");
+        System.out.println("Nome: " + academia.nome());
+        System.out.println("Idade: " + academia.idade());
+        System.out.println("Email: " + academia.email());
+        System.out.println("Modalidade: " + academia.modalidade());
+        System.out.println("URL: " + academia.url());
+
+        academiaModel aca = new academiaModel(academia);
+        academiaModel saved = repo.save(aca);
+
+        System.out.println("Dados salvos no banco: ");
+        System.out.println(saved);
+
+        return ResponseEntity.ok(saved);
     }
 
     // Endpoint para buscar uma academia por ID
@@ -51,20 +63,21 @@ public class academiaController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAcademia(@PathVariable UUID id, @RequestBody academiaDto academia) {
-        academiaModel existingAcademia = academiaService.getAcademiaById(id);
+    	 academiaModel existingAcademia = academiaService.getAcademiaById(id);
 
-        if (existingAcademia == null) {
-            return ResponseEntity.notFound().build();
-        }
-        existingAcademia.setNome(academia.nome());  // Assumindo que 'nome' é um campo da academiaModel
-        existingAcademia.setEmail(academia.email()); // Atualize os campos conforme sua classe
-        existingAcademia.setIdade(academia.idade());
-        existingAcademia.setModalidade(academia.modalidade());
-        existingAcademia.setUrl(academia.url());
+    	    if (existingAcademia == null) {
+    	        return ResponseEntity.notFound().build();
+    	    }
 
-        // Salva as mudanças no banco de dados
-        academiaModel updatedAcademia = repo.save(existingAcademia);
-        return ResponseEntity.ok(updatedAcademia);
+    	    // Atualizando os dados
+    	    existingAcademia.setNome(academia.nome());
+    	    existingAcademia.setEmail(academia.email());
+    	    existingAcademia.setIdade(academia.idade());
+    	    existingAcademia.setModalidade(academia.modalidade());
+    	    existingAcademia.setUrl(academia.url());
+
+    	    academiaModel updatedAcademia = repo.save(existingAcademia);
+    	    return ResponseEntity.ok(updatedAcademia);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAcademia(@PathVariable UUID id) {
